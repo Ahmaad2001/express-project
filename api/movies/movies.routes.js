@@ -6,6 +6,7 @@ const {
   movieUpdate,
   fetchMovie,
   movieDelete,
+  movieRate,
 } = require("./movies.controllers");
 const uploader = require("../../middlewares/uploader");
 
@@ -24,5 +25,6 @@ router.get("/", uploader.single("posterImage"), moviesGet);
 router.post("/", uploader.single("posterImage"), movieCreate);
 router.put("/:movieId", uploader.single("posterImage"), movieUpdate);
 router.delete("/:movieId", uploader.single("posterImage"), movieDelete);
+router.put("/:movieId", uploader.single("posterImage"), movieRate);
 
 module.exports = router;

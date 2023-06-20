@@ -53,3 +53,16 @@ exports.movieDelete = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.movieRate = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.posterImage = `${req.file.path}`;
+    }
+
+    await req.movie.updateOne(req.body);
+    return res.status(204).end();
+  } catch (error) {
+    return next(error);
+  }
+};
