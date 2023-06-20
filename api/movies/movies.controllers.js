@@ -1,5 +1,10 @@
 const Movie = require("../../models/Movie");
 
+exports.fetchMovie = async (movieId) => {
+  const foundMovie = await Movie.findById(movieId);
+  return foundMovie;
+};
+
 exports.movieCreate = async (req, res, next) => {
   try {
     if (req.file) {
@@ -19,6 +24,19 @@ exports.moviesGet = async (req, res, next) => {
     }
     const movies = await Movie.find();
     res.json(movies);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.movieUpdate = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.posterImage = `${req.file.path}`;
+    }
+
+    await req.movie.updateOne(req.body);
+    return res.status(204).end();
   } catch (error) {
     return next(error);
   }
