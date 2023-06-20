@@ -11,3 +11,15 @@ exports.movieCreate = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.moviesGet = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.posterImage = `${req.file.path}`;
+    }
+    const movies = await Movie.find();
+    res.json(movies);
+  } catch (error) {
+    return next(error);
+  }
+};

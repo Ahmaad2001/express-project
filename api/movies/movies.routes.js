@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { movieCreate } = require("./movies.controllers");
+const { movieCreate, moviesGet } = require("./movies.controllers");
 const uploader = require("../../middlewares/uploader");
 
 router.param("movieId", async (req, res, next, movieId) => {
@@ -14,6 +14,7 @@ router.param("movieId", async (req, res, next, movieId) => {
   }
 });
 
+router.get("/", uploader.single("posterImage"), moviesGet);
 router.post("/", uploader.single("posterImage"), movieCreate);
 
 module.exports = router;

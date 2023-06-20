@@ -7,9 +7,11 @@ const morgan = require("morgan");
 const errorHandler = require("./middlewares/errorHandler");
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const moviesRoutes = require("./api/movies/movies.routes");
+const cors = require("cors");
 connectDb();
 
 app.use("/media", express.static(path.join(__dirname, "media")));
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/movies", moviesRoutes);
