@@ -41,3 +41,15 @@ exports.movieUpdate = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.movieDelete = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.posterImage = `${req.file.path}`;
+    }
+    await req.movie.deleteOne();
+    return res.status(204).end();
+  } catch (error) {
+    return next(error);
+  }
+};
