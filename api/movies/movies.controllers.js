@@ -54,15 +54,31 @@ exports.movieDelete = async (req, res, next) => {
   }
 };
 
-exports.movieRate = async (req, res, next) => {
+exports.movieRating = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.posterImage = `${req.file.path}`;
-    }
+    if (req.body.ratings >= 0 && req.body.ratings <= 10) {
+      const updatedMovie = await Movie.updateOne(
+        req.movie,
+        { $push: { ratings: req.body.ratings } },
+        {
+          new: true,
+        }
+      );
 
-    await req.movie.updateOne(req.body);
-    return res.status(204).end();
+      if (req.file) {
+        req.body.posterImage = `${req.file.path}`;
+      }
+
+      return res
+        .status(201)
+        .json({ message: `${req.body.ratings} has been added to the ratings` });
+    } else {
+      return next({
+        status: 400,
+        message: "make sure the number is from 0 to 10",
+      });
+    }
   } catch (error) {
-    return next(error);
+    return next({ status: 400, message: error.message });
   }
 };
