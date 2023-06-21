@@ -71,11 +71,11 @@ exports.movieRating = async (req, res, next) => {
 
       return res
         .status(201)
-        .json({ message: `${req.body.ratings} has been added to the ratings` });
+        .json({ message: `${req.body.ratings} was added to the ratings` });
     } else {
       return next({
         status: 400,
-        message: "make sure the number is from 0 to 10",
+        message: "number has to be between 0 and 10",
       });
     }
   } catch (error) {
